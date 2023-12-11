@@ -22,4 +22,14 @@ public class QuestionService {
     public List<Question> getQuestionByDifficulty(String difficulty) {
         return questionDao.getQuestionByDifficultyLevel(difficulty);
     }
+
+    public String addQuestion(Question question) {
+         questionDao.save(question);
+         return "Successfully Added";
+    }
+
+    public String deleteById(Long id) {
+        questionDao.deleteById(id.intValue());
+        return "Successfully Deleted";
+    }
 }

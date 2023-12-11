@@ -1,6 +1,6 @@
 package com.example.quizapp.controller;
 
-import com.example.quizapp.Question;
+import com.example.quizapp.entity.Question;
 import com.example.quizapp.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class QuestionController {
     @Autowired
     QuestionService questionService;
 
-    @GetMapping("allQuestion")
+    @GetMapping("allQuestions")
     public List<Question> getAllQuestion() {
         return questionService.getAllQuestions();
     }

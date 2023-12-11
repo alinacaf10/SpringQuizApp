@@ -18,4 +18,8 @@ public class QuestionService {
     public List<Question> getQuestionByCategory(String category){
         return questionDao.getQuestionByCategory(category);
     }
+
+    public List<Question> getQuestionByDifficulty(String difficulty) {
+        return questionDao.getQuestionByDifficultyLevel(difficulty);
+    }
 }

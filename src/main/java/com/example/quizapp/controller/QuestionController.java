@@ -23,7 +23,11 @@ public class QuestionController {
     }
 
     @GetMapping("/category/{category}")
-    public List<Question> getByIdCategory(@PathVariable String category){
+    public List<Question> getQuestionByCategory(@PathVariable String category){
         return questionService.getQuestionByCategory(category);
+    }
+    @GetMapping("/difficulty/{difficulty}")
+    public List<Question> getQuestionByDifficulty(@PathVariable String difficulty){
+        return questionService.getQuestionByDifficulty(difficulty);
     }
 }

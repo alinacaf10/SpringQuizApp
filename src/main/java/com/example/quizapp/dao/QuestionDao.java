@@ -11,4 +11,6 @@ public interface QuestionDao extends JpaRepository<Question, Integer> {
 
 
     List<Question> getQuestionByCategory(String category);
+
+    List<Question> getQuestionByDifficultyLevel(String difficulty);
 }

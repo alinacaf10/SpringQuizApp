@@ -26,14 +26,13 @@ public class QuestionController {
     }
 
 
-
     @PostMapping("/add")
     public ResponseEntity<String> addQuestion(@RequestBody Question question) {
         return questionService.addQuestion(question);
     }
 
     @GetMapping("/delete/{id}")
-    public ResponseEntity<String> deleteQuestion(@PathVariable Long id) {
+    public ResponseEntity<String> deleteQuestion(@PathVariable Integer id) {
         return questionService.deleteById(id);
     }
 

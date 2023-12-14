@@ -14,14 +14,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class QuizService {
-    @Autowired
-    QuizRepository quizRepository;
-    @Autowired
-    QuestionRepository questionRepository;
+    private final QuizRepository quizRepository;
+    private final QuestionRepository questionRepository;
+
+    public QuizService(QuizRepository quizRepository, QuestionRepository questionRepository) {
+        this.quizRepository = quizRepository;
+        this.questionRepository = questionRepository;
+    }
 
     public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
 
@@ -34,15 +36,8 @@ public class QuizService {
     }
 
     public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(Integer id) {
-        Optional<Quiz> quiz = quizRepository.findById(id);
-        if (!quiz.isPresent()){
-            try {
-                throw new QuizNotFoundException("Quiz with "+id+" not found");
-            } catch (QuizNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        List<Question> questionsFromDB = quiz.get().getQuestions();
+        Quiz quiz=quizRepository.findById(id).orElseThrow(()->new QuizNotFoundException("Quiz with "+id+" not found"));
+        List<Question> questionsFromDB = quiz.getQuestions();
         List<QuestionWrapper> questionsForUsers = new ArrayList<>();
 
         for (Question q : questionsFromDB) {

@@ -16,7 +16,7 @@ public class Question {
     private String option4;
     private enum questionLevel{
         EASY, MEDIUM,HARD
-    };
+    }
     private String answer;
     private String category;
 }

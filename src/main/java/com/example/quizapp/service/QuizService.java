@@ -1,5 +1,6 @@
 package com.example.quizapp.service;
 
+import com.example.quizapp.exception.QuizNotFoundException;
 import com.example.quizapp.repository.QuestionRepository;
 import com.example.quizapp.repository.QuizRepository;
 import com.example.quizapp.domain.entity.Question;
@@ -34,6 +35,13 @@ public class QuizService {
 
     public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(Integer id) {
         Optional<Quiz> quiz = quizRepository.findById(id);
+        if (!quiz.isPresent()){
+            try {
+                throw new QuizNotFoundException("Quiz with "+id+" not found");
+            } catch (QuizNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
         List<Question> questionsFromDB = quiz.get().getQuestions();
         List<QuestionWrapper> questionsForUsers = new ArrayList<>();
 

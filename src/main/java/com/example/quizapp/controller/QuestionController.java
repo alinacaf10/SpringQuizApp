@@ -1,6 +1,6 @@
 package com.example.quizapp.controller;
 
-import com.example.quizapp.entity.Question;
+import com.example.quizapp.domain.entity.Question;
 import com.example.quizapp.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +25,7 @@ public class QuestionController {
         return questionService.getQuestionByCategory(category);
     }
 
-    @GetMapping("/difficulty/{difficulty}")
-    public ResponseEntity<List<Question>> getQuestionByDifficulty(@PathVariable String difficulty) {
-        return questionService.getQuestionByDifficulty(difficulty);
-    }
+
 
     @PostMapping("/add")
     public ResponseEntity<String> addQuestion(@RequestBody Question question) {

@@ -1,11 +1,11 @@
 package com.example.quizapp.service;
 
-import com.example.quizapp.dao.QuestionDao;
-import com.example.quizapp.dao.QuizDao;
-import com.example.quizapp.entity.Question;
-import com.example.quizapp.entity.QuestionWrapper;
-import com.example.quizapp.entity.Quiz;
-import com.example.quizapp.entity.Response;
+import com.example.quizapp.repository.QuestionRepository;
+import com.example.quizapp.repository.QuizRepository;
+import com.example.quizapp.domain.entity.Question;
+import com.example.quizapp.domain.model.QuestionWrapper;
+import com.example.quizapp.domain.entity.Quiz;
+import com.example.quizapp.domain.model.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,22 +18,22 @@ import java.util.Optional;
 @Service
 public class QuizService {
     @Autowired
-    QuizDao quizDao;
+    QuizRepository quizRepository;
     @Autowired
-    QuestionDao questionDao;
+    QuestionRepository questionRepository;
 
     public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
 
-        List<Question> questions = questionDao.findRandomQuestionsByCategory(category, numQ);
+        List<Question> questions = questionRepository.findRandomQuestionsByCategory(category, numQ);
         Quiz quiz = new Quiz();
         quiz.setTitle(title);
         quiz.setQuestions(questions);
-        quizDao.save(quiz);
+        quizRepository.save(quiz);
         return new ResponseEntity<>("Success", HttpStatus.CREATED);
     }
 
     public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(Integer id) {
-        Optional<Quiz> quiz = quizDao.findById(id);
+        Optional<Quiz> quiz = quizRepository.findById(id);
         List<Question> questionsFromDB = quiz.get().getQuestions();
         List<QuestionWrapper> questionsForUsers = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public class QuizService {
     }
 
     public ResponseEntity<Integer> calculateResult(Integer id, List<Response> responses) {
-        Quiz quiz = quizDao.findById(id).get();
+        Quiz quiz = quizRepository.findById(id).get();
         List<Question> questions = quiz.getQuestions();
         int right = 0;
         int i = 0;

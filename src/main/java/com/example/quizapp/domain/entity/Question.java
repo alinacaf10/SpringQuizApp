@@ -1,9 +1,6 @@
-package com.example.quizapp.entity;
+package com.example.quizapp.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -17,7 +14,10 @@ public class Question {
     private String option2;
     private String option3;
     private String option4;
-    private String difficultyLevel;
+    private enum questionLevel{
+        EASY, MEDIUM,HARD
+    };
     private String answer;
     private String category;
 }
+

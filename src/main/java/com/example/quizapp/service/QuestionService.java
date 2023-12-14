@@ -1,7 +1,7 @@
 package com.example.quizapp.service;
 
-import com.example.quizapp.dao.QuestionDao;
-import com.example.quizapp.entity.Question;
+import com.example.quizapp.repository.QuestionRepository;
+import com.example.quizapp.domain.entity.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +13,11 @@ import java.util.List;
 @Service
 public class QuestionService {
     @Autowired
-    QuestionDao questionDao;
+    QuestionRepository questionRepository;
 
     public ResponseEntity<List<Question>> getAllQuestions() {
         try {
-            return new ResponseEntity<>(questionDao.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(questionRepository.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -27,31 +27,24 @@ public class QuestionService {
     public ResponseEntity<List<Question>> getQuestionByCategory(String category) {
 
         try {
-            return new ResponseEntity<>(questionDao.getQuestionByCategory(category), HttpStatus.OK);
+            return new ResponseEntity<>(questionRepository.getQuestionByCategory(category), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
     }
 
-    public ResponseEntity<List<Question>> getQuestionByDifficulty(String difficulty) {
-        try {
-            return new ResponseEntity<>(questionDao.getQuestionByDifficultyLevel(difficulty), HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
-    }
+
 
     public ResponseEntity<String> addQuestion(Question question) {
-        questionDao.save(question);
+        questionRepository.save(question);
 
         return new ResponseEntity<>("Successfully Added", HttpStatus.CREATED);
 
     }
 
     public ResponseEntity<String> deleteById(Long id) {
-        questionDao.deleteById(id.intValue());
+        questionRepository.deleteById(id.intValue());
         return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
     }
 }

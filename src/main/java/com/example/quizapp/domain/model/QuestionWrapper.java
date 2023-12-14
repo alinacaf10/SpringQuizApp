@@ -1,4 +1,4 @@
-package com.example.quizapp.entity;
+package com.example.quizapp.domain.model;
 
 import lombok.Data;
 

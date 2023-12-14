@@ -1,4 +1,4 @@
-package com.example.quizapp.entity;
+package com.example.quizapp.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

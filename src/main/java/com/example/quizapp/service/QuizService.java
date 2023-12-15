@@ -7,8 +7,6 @@ import com.example.quizapp.domain.entity.Question;
 import com.example.quizapp.domain.model.QuestionWrapper;
 import com.example.quizapp.domain.entity.Quiz;
 import com.example.quizapp.domain.model.Response;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

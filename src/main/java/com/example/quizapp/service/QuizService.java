@@ -7,7 +7,6 @@ import com.example.quizapp.domain.entity.Question;
 import com.example.quizapp.domain.model.QuestionWrapper;
 import com.example.quizapp.domain.entity.Quiz;
 import com.example.quizapp.domain.model.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,17 +24,17 @@ public class QuizService {
         this.questionRepository = questionRepository;
     }
 
-    public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
+    public String createQuiz(String category, int numQ, String title) {
 
         List<Question> questions = questionRepository.findRandomQuestionsByCategory(category, numQ);
         Quiz quiz = new Quiz();
         quiz.setTitle(title);
         quiz.setQuestions(questions);
         quizRepository.save(quiz);
-        return new ResponseEntity<>("Success", HttpStatus.CREATED);
+        return "Success";
     }
 
-    public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(Integer id) {
+    public List<QuestionWrapper> getQuizQuestions(Integer id) {
         Quiz quiz=quizRepository.findById(id).orElseThrow(()->new QuizNotFoundException("Quiz with "+id+" not found"));
         List<Question> questionsFromDB = quiz.getQuestions();
         List<QuestionWrapper> questionsForUsers = new ArrayList<>();
@@ -44,10 +43,10 @@ public class QuizService {
             QuestionWrapper qw = new QuestionWrapper(q.getId(), q.getQuestion(), q.getOption1(), q.getOption2(), q.getOption3(), q.getOption4());
             questionsForUsers.add(qw);
         }
-        return new ResponseEntity<>(questionsForUsers, HttpStatus.OK);
+        return (questionsForUsers);
     }
 
-    public ResponseEntity<Integer> calculateResult(Integer id, List<Response> responses) {
+    public Integer calculateResult(Integer id, List<Response> responses) {
         Quiz quiz = quizRepository.findById(id).get();
         List<Question> questions = quiz.getQuestions();
         int right = 0;
@@ -58,6 +57,6 @@ public class QuizService {
 
             i++;
         }
-        return new ResponseEntity<>(right, HttpStatus.OK);
+        return right;
     }
 }

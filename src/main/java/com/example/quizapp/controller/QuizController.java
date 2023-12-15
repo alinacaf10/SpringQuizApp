@@ -4,6 +4,7 @@ import com.example.quizapp.domain.model.QuestionWrapper;
 import com.example.quizapp.domain.model.Response;
 import com.example.quizapp.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,16 +19,16 @@ public class QuizController {
 
     @PostMapping("create")
     public ResponseEntity<String> createQuiz(@RequestParam String category, @RequestParam int numQ, @RequestParam String title) {
-        return quizService.createQuiz(category, numQ, title);
+        return new ResponseEntity<>(quizService.createQuiz(category, numQ, title), HttpStatus.CREATED);
     }
 
     @GetMapping("get/{id}")
     public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(@PathVariable Integer id) {
-        return quizService.getQuizQuestions(id);
+        return new ResponseEntity<>(quizService.getQuizQuestions(id),HttpStatus.OK);
     }
 
     @PostMapping("submit/{id}")
     public ResponseEntity<Integer> submitQuiz(@PathVariable Integer id, @RequestBody List<Response> responses) {
-        return quizService.calculateResult(id, responses);
+        return new ResponseEntity<>(quizService.calculateResult(id, responses),HttpStatus.OK);
     }
 }

@@ -14,25 +14,25 @@ public class QuestionService {
     @Autowired
     QuestionRepository questionRepository;
 
-    public ResponseEntity<List<Question>> getAllQuestions() {
-        return new ResponseEntity<>(questionRepository.findAll(), HttpStatus.OK);
+    public List<Question> getAllQuestions() {
+        return (questionRepository.findAll());
     }
 
-    public ResponseEntity<List<Question>> getQuestionByCategory(String category) {
+    public List<Question> getQuestionByCategory(String category) {
 
-        return new ResponseEntity<>(questionRepository.getQuestionByCategory(category), HttpStatus.OK);
+        return (questionRepository.getQuestionByCategory(category));
 
     }
 
-    public ResponseEntity<String> addQuestion(Question question) {
+    public String addQuestion(Question question) {
         questionRepository.save(question);
 
-        return new ResponseEntity<>("Successfully Added", HttpStatus.CREATED);
+        return ("Successfully Added");
 
     }
 
-    public ResponseEntity<String> deleteById(Integer id) {
+    public String deleteById(Integer id) {
         questionRepository.deleteById(id);
-        return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
+        return ("Successfully Deleted");
     }
 }
